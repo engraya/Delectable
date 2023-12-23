@@ -23,7 +23,7 @@ function NavBar() {
           <Link to="/">
             <a className="flex items-center space-x-3 rtl:space-x-reverse">
               <img src={logo} alt="Logo" style={{ height: '60px', width: '60px' }} />
-              <span className="self-center text-2xl font-extrabold bg-clip-text bg-gradient-to-r to-purple-600 from-sky-400 underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Delectable</span>
+              <span className="self-center text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r to-purple-600 from-sky-400 underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Delectable</span>
               <span className="bg-blue-100 text-blue-800 text-xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">pro</span>
             </a>
           </Link>
@@ -58,16 +58,15 @@ function NavBar() {
                 </Link>
               </li>
               <li>
-                <Link to="/popular">
-                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Popular</a>
+                <Link to="/destinations">
+                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Destinations</a>
                 </Link>
               </li>
               <li>
-                <Link to="/favourites">
-                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Favourites</a>
+                <Link to="/gallery">
+                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Gallery</a>
                 </Link>
               </li>
-              
               <li>   
               </li>
               
