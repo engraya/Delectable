@@ -58,8 +58,13 @@ function NavBar() {
                 </Link>
               </li>
               <li>
-                <Link to="/popular">
-                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Popular</a>
+                <Link to="/recipes">
+                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Recipes</a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/cuisine">
+                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Cuisines</a>
                 </Link>
               </li>
               <li>

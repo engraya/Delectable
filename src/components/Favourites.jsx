@@ -12,7 +12,7 @@ import {
   } from "@material-tailwind/react";
 function Favourites() {
   return (
-    <div className='group mt-8 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
+    <div className='group mt-8 px-28 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
     <Card className="w-full max-w-[20rem] shadow-lg">
       <CardHeader floated={false} color="blue-gray">
         <img

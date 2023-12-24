@@ -1,16 +1,15 @@
 import React from 'react'
 import Popular from '../components/Popular'
-import Veggie from '../components/Veggie'
+import Veggie from '../components/Vegetarian'
 import {Routes, Route} from 'react-router-dom'
+import Cuisine from './Cuisine'
 function AppPages() {
   return (
     <div>
-    {/* <Route>
-      <Route path='/popular' element={<Popular/>}/>
-      <Route path='/veggie' element={<Veggie/>}/>
-    </Route> */}
-    <Popular/>
-    <Veggie/>
+    <Routes>
+      <Route to={'/cuisine'} element={<Cuisine/>} />
+    </Routes>
+
     </div>
   )
 }
