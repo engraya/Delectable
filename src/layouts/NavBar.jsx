@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DarkMode from './DarkMode/DarkMode';
 import { Link } from 'react-router-dom';
 import logo from '../images/food1.png'
+import { RxGithubLogo } from "react-icons/rx";
 
 function NavBar() {
   const repoGithubUrl = ""
@@ -29,7 +30,9 @@ function NavBar() {
           </Link>
 
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
+          <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mt-1"><RxGithubLogo /></button>
             <DarkMode />
+            
             <button
               onClick={toggleMobileMenu}
               type="button"

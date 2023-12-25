@@ -48,9 +48,8 @@ function Popular() {
     {popularRecipes.map((recipe) => {
       return (
 
-            <Link to={'/recipe/' + recipe.id}>
+      
         <RecipeCard key={recipe.id} recipe={recipe}/>
-        </Link>
 
       )
     })}

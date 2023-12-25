@@ -25,11 +25,10 @@ function Cuisine() {
       <h2 className="text-md font-bold tracking-tight sm:text-2xl text-center">{type} Cuisines</h2>
       <div className='group relative isolate px-28  mt-8 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
     
-    {cuisine.map((recipe) => {
+    {cuisine?.map((recipe) => {
       return (
-        <Link to={'/recipe/' + recipe.id}>
+   
         <RecipeCard key={recipe.id} recipe={recipe}/>
-        </Link>
 
       )
     })}

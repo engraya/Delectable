@@ -9,6 +9,7 @@ import Cuisine from './pages/Cuisine';
 import Vegetarian from './components/Vegetarian';
 import SeachedRecipe from './pages/SeachedRecipe';
 import RecipeDetails from './pages/RecipeDetails';
+import Footer from './layouts/Footer';
 function App() {
   return (
     <div className="App">
@@ -24,7 +25,7 @@ function App() {
       <Route path='/searched/:search' element={<SeachedRecipe/>}/>
       <Route path='/recipe/:name' element={<RecipeDetails/>}/>
     </Routes>
-    <AppPages/>  
+    <Footer/>
     </div>
   );
 }

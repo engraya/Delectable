@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard'
 import SearchRecipe from '../components/SearchRecipe'
 function SeachedRecipe() {
@@ -28,7 +28,9 @@ function SeachedRecipe() {
     
     {searchedRecipe?.map((recipe) => {
       return (
+   
         <RecipeCard key={recipe.id} recipe={recipe}/>
+
       )
     })}
     </div>
