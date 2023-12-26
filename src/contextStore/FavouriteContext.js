@@ -45,7 +45,7 @@ export function FavouriteContextProvider(props) {
 
 
     const recipeIsFavouriteHandler = (recipeId) => {
-        return userFavourites.some(recipe => recipe.id === recipeId)
+        return userFavourites.some(recipe => recipe === recipeId)
     }
 
     const recipeContext = {

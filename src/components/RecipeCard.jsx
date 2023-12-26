@@ -29,11 +29,7 @@ function RecipeCard(props) {
     if (recipeIsFavourite) {
       favouriteRecipeContext.removeFavourite(props.recipe.id)
     } else {
-      favouriteRecipeContext.addFavourite({
-        id : props.recipe.id,
-        title : props.recipe.title,
-        image : props.recipe.image
-      });
+      favouriteRecipeContext.addFavourite(props.recipe.id);
     }
 
   }
