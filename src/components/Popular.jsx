@@ -42,15 +42,15 @@ function Popular() {
 
   return (
     <div>
-    <h1>Popular Recipes</h1>
+      <div className="max-w-screen-xl mx-auto text-center">
+        <h3 className="text-3xl md:text-4xl font-extrabold dark:text-white mb-4 mt-36">Popular Recipes</h3>
+      </div>
     <div className='group relative isolate px-28  mt-8 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
     
     {popularRecipes.map((recipe) => {
       return (
-
       
         <RecipeCard key={recipe.id} recipe={recipe}/>
-
       )
     })}
     </div>

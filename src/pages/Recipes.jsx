@@ -5,13 +5,9 @@ import Vegetarian from '../components/Vegetarian'
 
 function Recipes() {
   return (
-    <div>
-    <div>
+    <div className='lg:grid-cols-4 sm:px-6 lg:px-24 mb-24'>
     <Popular/>
-    </div>
-      <div>
-        <Vegetarian/>
-      </div>
+    <Vegetarian/>
     </div>
   )
 }

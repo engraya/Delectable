@@ -15,7 +15,29 @@ import {
 import { Input } from "@material-tailwind/react";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import FavouriteContext from '../contextStore/FavouriteContext';
+
+
 function RecipeCard(props) {
+
+  const favouriteRecipeContext = useContext(FavouriteContext);
+
+  const recipeIsFavourite = favouriteRecipeContext.recipeIsFavourite(props.recipe.id);
+
+  const toggleRecipeFavouriteHandler = () => {
+    if (recipeIsFavourite) {
+      favouriteRecipeContext.removeFavourite(props.recipe.id)
+    } else {
+      favouriteRecipeContext.addFavourite({
+        id : props.recipe.id,
+        title : props.recipe.title,
+        image : props.recipe.image
+      });
+    }
+
+  }
+
   return (
     <div>
           <Card className="w-full max-w-[20rem] shadow-lg">
@@ -40,7 +62,8 @@ function RecipeCard(props) {
             color="blue-gray"
             className="flex items-center gap-1.5 font-normal"
           >
-            <a href="#"><AiFillLike /></a>
+          { recipeIsFavourite ? <button onClick={toggleRecipeFavouriteHandler}>Remove</button> : <button onClick={toggleRecipeFavouriteHandler}>Add</button>}
+       
           </Typography>
         </div>
         {/* <Typography color="gray">

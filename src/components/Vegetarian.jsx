@@ -41,8 +41,10 @@ function Vegetarian() {
 
   return (
     <div>
-      <h1>Vegetarian Recipes</h1>
-      <div className='group relative isolate px-28  mt-8 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
+      <div className="max-w-screen-xl mx-auto text-center">
+        <h3 className="text-3xl md:text-4xl font-extrabold dark:text-white mb-4 mt-8">Vegetarian Recipes</h3>
+      </div>
+      <div className='group relative isolate px-28  mt-2 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
     
     {vegetarianRecipes.map((recipe) => {
       return (
