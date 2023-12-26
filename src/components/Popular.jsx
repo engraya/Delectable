@@ -31,7 +31,7 @@ function Popular() {
         setPopularRecipes(JSON.parse(checkLocalStorage))
       } else {
         const api = await fetch(
-          `https://api.spoonacular.com/recipes/random?apiKey=ea225680f3474e89829b6e239e703c8d&number=20`)
+          `https://api.spoonacular.com/recipes/random?apiKey=b414562bf6704b13ac3272e5e9ddadaf&number=50`)
       const data = await api.json();
 
       localStorage.setItem('popularRecipes', JSON.stringify(data.recipes))
@@ -43,7 +43,7 @@ function Popular() {
   return (
     <div>
       <div className="max-w-screen-xl mx-auto text-center">
-        <h3 className="text-3xl md:text-4xl font-extrabold dark:text-white mb-4 mt-36">Popular Recipes</h3>
+        <h3 className="text-3xl md:text-4xl font-extrabold dark:text-white mb-4 mt-32 text-cyan-600 ">Popular Recipes</h3>
       </div>
     <div className='group relative isolate px-28  mt-8 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
     

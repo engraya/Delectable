@@ -15,24 +15,9 @@ import {
 import { Input } from "@material-tailwind/react";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import FavouriteContext from '../contextStore/FavouriteContext';
 
 
 function RecipeCard(props) {
-
-  const favouriteRecipeContext = useContext(FavouriteContext);
-
-  const recipeIsFavourite = favouriteRecipeContext.recipeIsFavourite(props.recipe.id);
-
-  const toggleRecipeFavouriteHandler = () => {
-    if (recipeIsFavourite) {
-      favouriteRecipeContext.removeFavourite(props.recipe.id)
-    } else {
-      favouriteRecipeContext.addFavourite(props.recipe.id);
-    }
-
-  }
 
   return (
     <div>
@@ -50,16 +35,9 @@ function RecipeCard(props) {
           </Link>
 
       <CardBody>
-        <div className="mb-3 flex items-center justify-between">
-          <Typography variant="h6" color="blue-gray" className="font-medium">
+        <div className="mb-3 flex items-center justify-between text-center">
+          <Typography variant="h6" color="blue-gray" className="font-bold text-center">
            {props.recipe.title}
-          </Typography>
-          <Typography
-            color="blue-gray"
-            className="flex items-center gap-1.5 font-normal"
-          >
-          { recipeIsFavourite ? <button onClick={toggleRecipeFavouriteHandler}>Remove</button> : <button onClick={toggleRecipeFavouriteHandler}>Add</button>}
-       
           </Typography>
         </div>
         {/* <Typography color="gray">
