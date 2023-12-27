@@ -6,10 +6,7 @@ import { FcSearch } from "react-icons/fc";
 function SearchRecipe() {
 
     const [inputQuery, setInputQuery] = useState("");
-
     const navigate = useNavigate();
-
-
     const handleSearchFormChange = (e) => {
         setInputQuery(e.target.value)
     }

@@ -2,16 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { AiFillLike } from "react-icons/ai";
 import { AiFillDislike } from "react-icons/ai";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-  Tooltip,
-  IconButton,
-} from "@material-tailwind/react";
+import {Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';

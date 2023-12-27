@@ -5,13 +5,13 @@
 :root {
   --body_background: white;
   --body_color: black;
-  --link_color: #5468ff;
+  --link_color: #7481e4;
 }
 
 [data-theme="dark"] {
   --body_background: #1c1e21;
   --body_color: white;
-  --link_color: rgb(155, 204, 204);
+  --link_color: rgb(200, 235, 235);
 }
 
 

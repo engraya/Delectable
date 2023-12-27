@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import logo from '../images/food1.png'
 import { RxGithubLogo } from "react-icons/rx";
 
+
+
+const githubRepoUrl = "https://github.com/engraya/delectable-food-webapp"
 function NavBar() {
   const repoGithubUrl = ""
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,14 +28,30 @@ function NavBar() {
             <a className="flex items-center space-x-3 rtl:space-x-reverse">
               <img src={logo} alt="Logo" style={{ height: '60px', width: '60px' }} />
               <span className="self-center text-2xl font-extrabold bg-clip-text bg-gradient-to-r to-purple-600 from-sky-400 underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Delectable</span>
-              <span className="bg-blue-100 text-blue-800 text-xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">pro</span>
+              <span className="bg-blue-100 text-blue-800 text-xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="-mt-0.5 h-5 w-5 text-yellow-700"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                clipRule="evenodd"
+              />
+            </svg>
+              </span>
+
             </a>
           </Link>
 
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
+          <Link to={githubRepoUrl} target='_blank'>
           <button type="button" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mt-1"><RxGithubLogo /></button>
+          </Link>
             <DarkMode />
-            
             <button
               onClick={toggleMobileMenu}
               type="button"
@@ -61,8 +80,8 @@ function NavBar() {
                 </Link>
               </li>
               <li>
-                <Link to="/recipes">
-                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Cuisines</a>
+                <Link to="/trending">
+                  <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Trending</a>
                 </Link>
               </li>
        
@@ -72,7 +91,7 @@ function NavBar() {
                 </Link>
               </li>
               <li>
-                <Link to="/cuisine">
+                <Link to="/cuisines">
                   <a onClick={closeMobileMenu} className="block py-2 px-3 text-cyan-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-cyan-900 md:p-0 md:dark:hover:text-cyan-900 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
                 </Link>
               </li>
