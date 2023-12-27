@@ -11,7 +11,6 @@ function Popular() {
   const [popularRecipes, setPopularRecipes] = useState([])
   const [isLoading, setIsLoading] = useState(true);
 
-
     useEffect(() => {
       getPopularRecipes();
     }, [])

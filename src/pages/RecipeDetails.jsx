@@ -26,7 +26,6 @@ function RecipeDetails() {
         setIsLoading(false);
     }, []);
 
-
     // GENERATE PDF FUNCTION
 
     const generateRecipeDetailsPdf = () => {
