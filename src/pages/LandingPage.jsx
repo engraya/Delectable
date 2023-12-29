@@ -39,7 +39,7 @@ function LandingPage() {
         </h4>
         <p className="mt-6 text-lg leading-8 sm:p-6 lg:px-48">Explore a vast database of global cuisines, from traditional to contemporary.Learn the secrets behind your favorite dishes with detailed recipes and cooking tips. Engage with a community of food lovers, share your experiences, and discover hidden gems.</p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
-        <Link to="/recipes">
+        <Link to="/trending">
         <a className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600">Get started <span aria-hidden="true">→</span></a>
         </Link>
         </div>
