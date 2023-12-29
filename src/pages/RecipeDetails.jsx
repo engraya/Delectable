@@ -53,10 +53,6 @@ function RecipeDetails() {
       // pdf.setTextColor(100);
       // pdf.text(`Summary : ${recipeDetails.summary}`, 100, 120);
       // pdf.text(`Cooking Instructions : ${recipeDetails.instructions}`, 20, 100);
-    
-
-
-
 
       pdf.save('Recipe-Details.pdf');
 

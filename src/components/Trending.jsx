@@ -1,11 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import { useEffect } from 'react'
-import {Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
-import { Input } from "@material-tailwind/react";
 import { useState } from 'react';
 import RecipeCard from './RecipeCard';
-import { Link } from 'react-router-dom';
 function Popular() {
 
   const [popularRecipes, setPopularRecipes] = useState([])
