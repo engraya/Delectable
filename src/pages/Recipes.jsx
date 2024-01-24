@@ -4,7 +4,7 @@ import Trending from '../components/Trending'
 
 function Recipes() {
   return (
-    <div className='lg:grid-cols-4 sm:px-6 lg:px-24 mb-24'>
+    <div className='lg:grid-cols-4 sm:px-6 lg:px-24 mb-24 min-h-80'>
     <Trending/>
     </div>
   )

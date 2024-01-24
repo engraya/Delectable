@@ -12,7 +12,7 @@ function SeachedRecipe() {
     let { search } = useParams();
 
     const getSearchedRecipe = async (name) => {
-        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}&number=16`)
+        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${import.meta.env.REACT_APP_API_KEY}&query=${name}&number=16`)
         const recipes = await data.json();
         setIsLoading(false)
         setSearchRecipe(recipes.results)
