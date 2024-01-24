@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function RecipeCategory() {
   return (
     <div>
-      <div className="mx-auto max-w-2xl text-center">
+      <div className="mx-auto max-w-md text-center">
       <Link to={'/cuisines/African'}>
       <span className="inline-flex items-center rounded-md text-xs font-medium text-gray-600 ring-gray-500/10">
       <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">African</button>
