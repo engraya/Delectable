@@ -12,7 +12,6 @@ function Footer() {
     </span>
   </div>
 </footer>
-
     </div>
   )
 }

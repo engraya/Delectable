@@ -1,5 +1,4 @@
 import React from 'react'
-import { RiDownloadCloud2Fill } from "react-icons/ri";
 import downloadPic from '../images/download.svg'
 
 function ImageDownloader({ imageUrl, filename }) {

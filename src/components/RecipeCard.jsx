@@ -1,50 +1,34 @@
 import React from 'react'
-import { useEffect } from 'react'
-import { AiFillLike } from "react-icons/ai";
-import { AiFillDislike } from "react-icons/ai";
-import {Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
-import { Input } from "@material-tailwind/react";
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
 function RecipeCard(props) {
 
   return (
-    <div>
-          <Card className="w-full max-w-[20rem] shadow-lg">
-          <Link to={'/recipe/' + props.recipe.id}>
-      <CardHeader floated={false} color="blue-gray">
-      <img
-          src={props.recipe.image}
-          alt="ui/ux review check"
-        />
-
-
-        <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-      </CardHeader>
-          </Link>
-
-      <CardBody>
-        <div className="mb-3 flex items-center justify-between text-center">
-          <Typography variant="h6" color="blue-gray" className="font-bold text-center">
-           {props.recipe.title}
-          </Typography>
-        </div>
-        {/* <Typography color="gray">
-          Enter a freshly updated and thoughtfully furnished peaceful home
-          surrounded by ancient trees, stone walls, and open meadows.
-        </Typography> */}
-      </CardBody>
-      {/* <CardFooter className="pt-3">
-        <Button size="lg" fullWidth={true}>
-          Reserve
-        </Button>
-      </CardFooter> */}
-    </Card>
-
-
+    <>
+      <Link to={'/recipe/' + props.recipe.id}>
+          <div className="rounded overflow-hidden shadow-lg flex flex-col">
+      <a href="#" />
+      <div className="relative">
+          <img className="w-full" src={props.recipe.image} alt="Recipe" />
+          <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
+          </div>
+          {/* <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+            Cooking
+          </div> */}
+      </div>
+      <div className="px-6 py-4 mb-auto">
+        <div className="font-medium text-lg hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2">Simplest
+        {props.recipe.title}
+          </div>
+        {/* <p className="text-gray-500 text-sm">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        </p> */}
+      </div>
     </div>
+    </Link>
+    </>
+
   )
 }
 

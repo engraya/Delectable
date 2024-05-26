@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react';
 import RecipeCard from './RecipeCard';
+import PagesContainer from './PagesContainer';
 function Popular() {
 
   const [popularRecipes, setPopularRecipes] = useState([])
@@ -50,18 +51,20 @@ function Popular() {
   }    
 
   return (
-    <div>
-      <div className="max-w-screen-xl mx-auto text-center">
-        <h3 className="text-3xl md:text-4xl font-extrabold dark:text-white mb-4 mt-32 text-cyan-600 ">Trending Recipes</h3>
-      </div>
-    <div className='group relative isolate px-28  mt-8 inline-flex flex-wrap items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
-    {popularRecipes.map((recipe) => {
-      return (
-        <RecipeCard key={recipe.id} recipe={recipe}/>
-      )
+    <PagesContainer>
+      <h2 className="text-center font-display text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+        Trending Recipes
+      </h2>
+    <div className="max-w-screen-xl mx-auto p-5 sm:p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+      {popularRecipes.map((recipe) => {
+    return (
+      <RecipeCard key={recipe.id} recipe={recipe}/>
+    )
     })}
+      </div>
     </div>
-    </div>
+    </PagesContainer>
   )
 }
 

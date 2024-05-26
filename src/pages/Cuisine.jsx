@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import RecipeCard from '../components/RecipeCard'
-import RecipeCategory from '../components/RecipeCategory'
 import SearchRecipe from '../components/SearchRecipe'
+import PagesContainer from '../components/PagesContainer'
 
 function Cuisine() {
     const [cuisine, setCuisine] = useState([]);
@@ -41,19 +41,25 @@ function Cuisine() {
 
 
   return (
-    <div>
+    <PagesContainer>
     <SearchRecipe/>
-      <RecipeCategory/>
-      <h2 className="text-md font-bold tracking-tight sm:text-2xl text-center text-cyan-600 mt-5">{type} Cuisines</h2>
-      <div className='group relative isolate px-28  mt-8 inline-flex flex-wrap content-center justify-center items-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
-          {cuisine?.map((recipe) => {
-            return (
-              <RecipeCard key={recipe.id} recipe={recipe}/>
-            )
-    })}
+    <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+      {cuisine?.map((recipe) => {
+      return (
+      <RecipeCard key={recipe.id} recipe={recipe}/>
+      )
+      })}
+      </div>
     </div>
-    </div>
+    </PagesContainer>
   )
 }
 
 export default Cuisine
+
+
+
+
+
+

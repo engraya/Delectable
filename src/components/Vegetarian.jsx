@@ -5,6 +5,7 @@ import { Input } from "@material-tailwind/react";
 import { useState } from 'react';
 import RecipeCard from './RecipeCard';
 import { Link } from 'react-router-dom';
+import PagesContainer from './PagesContainer';
 function Vegetarian() {
 
   const [vegetarianRecipes, setVegetarianRecipes] = useState([]);
@@ -54,18 +55,20 @@ function Vegetarian() {
   }  
 
   return (
-    <div>
-      <div className="max-w-screen-xl mx-auto text-center">
-        <h3 className="text-3xl md:text-4xl font-extrabold dark:text-white mb-4 mt-32 text-cyan-600">Vegetarian Recipes</h3>
+    <PagesContainer>
+      <h2 className="text-center font-display text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+        Vegetarian Recipes
+      </h2>
+    <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+      {vegetarianRecipes.map((recipe) => {
+return (
+  <RecipeCard key={recipe.id} recipe={recipe}/>
+)
+})}
       </div>
-      <div className='group relative isolate px-28  mt-2 inline-flex flex-wrap items-center justify-center content-center gap-3 sm:inline-flex sm:flex-wrap sm:items-center sm:gap-3'>
-    {vegetarianRecipes.map((recipe) => {
-      return (
-        <RecipeCard key={recipe.id} recipe={recipe}/>
-      )
-    })}
     </div>
-    </div>
+    </PagesContainer>
   )
 }
 

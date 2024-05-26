@@ -5,6 +5,7 @@ import { GrFormPreviousLink } from "react-icons/gr";
 import { Link } from 'react-router-dom';
 import ImageDownloader from '../components/ImageDownloader'
 import jsPDF from 'jspdf';
+import PagesContainer from '../components/PagesContainer';
 
 function RecipeDetails() {
 
@@ -82,8 +83,7 @@ function RecipeDetails() {
 
 
   return (
-    <div>
-      <div className="pt-6">
+      <PagesContainer>
         <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <Link to='/'>
@@ -218,8 +218,7 @@ function RecipeDetails() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </PagesContainer>
   )
 }
 
