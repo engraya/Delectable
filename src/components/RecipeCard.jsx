@@ -9,7 +9,7 @@ function RecipeCard(props) {
       <Link to={'/recipe/' + props.recipe.id}>
           <div className="rounded overflow-hidden shadow-lg flex flex-col">
       <a href="#" />
-      <div className="relative">
+      <div className="relative shadow-2xl rounded-xl">
           <img className="w-full" src={props.recipe.image} alt="Recipe" />
           <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
           </div>
