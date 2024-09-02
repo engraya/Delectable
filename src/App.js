@@ -7,11 +7,11 @@ import SeachedRecipe from './pages/SeachedRecipe';
 import RecipeDetails from './pages/RecipeDetails';
 import Footer from './layouts/Footer';
 import NotFoundPage from './pages/NotFoundPage';
-import NavigationBar from './layouts/NavigationBar';
+import NavBar from './components/NavBar';
 function App() {
   return (
-    <div className="App">
-    <NavigationBar/>
+    <div className='min-h-screen'>
+    <NavBar/>
     <Routes>
       <Route path='/' element={<LandingPage/>}/>
       <Route path='/trending' element={<Trending/>}/>

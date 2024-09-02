@@ -74,32 +74,32 @@ function LandingPage() {
             <div>
               <img className="h-auto  rounded-lg" src={i} alt="" />
             </div>
-            <div>
+            <div className='md:hidden flex'>
               <img className="h-auto  rounded-lg" src={j} alt="" />
             </div>
           </div>
       </div>
       
 
-  <div className="mx-auto max-w-2xl lg:max-w-4xl mb-36">
-  <p className="mt-0 text-lg leading-8 text-center sm:p-6">At Delectable, we believe in the power of food to connect, inspire, and delight. Our platform is a tribute to the rich tapestry of global culinary traditions. Join us in exploring the stories behind each dish, the passion of the chefs, and the vibrant cultures that give flavor to our world.</p>
-    <img className="mx-auto h-12" src={icon} alt="" />
-    <figure className="mt-10">
-      <blockquote className="text-center text-xl font-semibold leading-8  sm:text-2xl sm:leading-9">
-        <p >“As a food enthusiast, Delectable is my go-to source for discovering new recipes and learning about different cuisines. It's a culinary journey like no other!”</p>
-      </blockquote>
-      <figcaption className="mt-10">
-        <img className="mx-auto h-10 w-10 rounded-full" src={author} alt="" />
-        <div className="mt-4 flex items-center justify-center space-x-3 text-base">
-          <div className="font-semibold">engr_aya</div>
-          <svg viewBox="0 0 2 2" width={3} height={3} aria-hidden="true" className="">
-            <circle cx={1} cy={1} r={1} />
-          </svg>
-          <div className="">Fullstack Engineer</div>
-        </div>
-      </figcaption>
-    </figure>
-  </div>
+      <div className="mx-auto max-w-2xl lg:max-w-4xl mb-36">
+      <p className="mt-0 text-lg leading-8 text-center sm:p-6">At Delectable, we believe in the power of food to connect, inspire, and delight. Our platform is a tribute to the rich tapestry of global culinary traditions. Join us in exploring the stories behind each dish, the passion of the chefs, and the vibrant cultures that give flavor to our world.</p>
+        <img className="mx-auto h-12" src={icon} alt="" />
+        <figure className="mt-10">
+          <blockquote className="text-center text-xl font-semibold leading-8  sm:text-2xl sm:leading-9">
+            <p >“As a food enthusiast, Delectable is my go-to source for discovering new recipes and learning about different cuisines. It's a culinary journey like no other!”</p>
+          </blockquote>
+          <figcaption className="mt-10">
+            <img className="mx-auto h-10 w-10 rounded-full" src={author} alt="" />
+            <div className="mt-4 flex items-center justify-center space-x-3 text-base">
+              <div className="font-semibold">engr_aya</div>
+              <svg viewBox="0 0 2 2" width={3} height={3} aria-hidden="true" className="">
+                <circle cx={1} cy={1} r={1} />
+              </svg>
+              <div className="">Fullstack Engineer</div>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
 
   </div>
 

@@ -10,10 +10,8 @@ function Footer() {
       <div className="w-full mx-auto max-w-screen-xl p-4  md:items-center md:justify-center">
     <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400"><a href={githubRepoUrl} target='_blank' className="hover:underline"><RxGithubLogo /></a>
     </span>
-    <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#" className="hover:underline">Delectable™</a>. All Rights Reserved.
+    <span className="text-sm text-gray-300 sm:text-center dark:text-gray-400">© 2023 <a href="#" className="hover:underline">Delectable™</a>. All Rights Reserved.
     </span><br />
-    <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">by engraya
-    </span>
   </div>
 </footer>
     </div>

@@ -1,10 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
-import {Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
-import { Input } from "@material-tailwind/react";
 import { useState } from 'react';
 import RecipeCard from './RecipeCard';
-import { Link } from 'react-router-dom';
 import PagesContainer from './PagesContainer';
 function Vegetarian() {
 

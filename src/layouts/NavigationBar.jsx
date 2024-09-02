@@ -19,7 +19,7 @@ const navigation = [
 function NavigationBar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header className="inset-x-0 top-0 z-999 lg:px-20 sticky">
+    <header className="inset-x-0 top-0 lg:px-20 sticky">
       <nav className="flex items-center z-999 p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1 justify-center items-center z-999">
           <Link to="/" className="-m-1.5 p-1.5">
@@ -62,9 +62,7 @@ function NavigationBar() {
                 {item.name}
               </Link>
             ))}
-    
           </div>
-     
         </div>
       )}
     </header>
