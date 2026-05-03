@@ -5,8 +5,8 @@ const envSchema = z.object({
   SPOONACULAR_API_KEY: z.string().min(1, "SPOONACULAR_API_KEY is required"),
   /** Google AI Studio / Gemini API key for recipe copilot and smart search */
   GEMINI_API_KEY: z.string().optional(),
-  /** e.g. gemini-1.5-flash (widest reach), gemini-2.0-flash — see Google AI model docs */
-  GEMINI_MODEL: z.string().default("gemini-1.5-flash"),
+  /** See Google AI Studio model list (e.g. gemini-3-flash-preview, gemini-2.0-flash) */
+  GEMINI_MODEL: z.string().default("gemini-3-flash-preview"),
   ALLOWED_ORIGINS: z.string().default("http://localhost:5173"),
 });
 

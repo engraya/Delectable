@@ -10,7 +10,7 @@ AI-assisted recipe discovery app: React (Vite + TypeScript) frontend and a small
 
 ## Quick start
 
-1. Set **`SPOONACULAR_API_KEY`** in either the **repo root** `.env` or `apps/api/.env` (see [`.env.example`](./.env.example)). The API loads both; `apps/api/.env` wins if a variable is set in both. A root **`REACT_APP_API_KEY`** from the old CRA setup is still accepted as the Spoonacular key. Add **`GEMINI_API_KEY`** if you want AI features (optional **`GEMINI_MODEL`**, default `gemini-1.5-flash`). If Gemini returns **fetch failed**, check VPN/firewall/proxy, set **`HTTPS_PROXY`** if required, or try **`GEMINI_MODEL=gemini-2.0-flash`**.
+1. Set **`SPOONACULAR_API_KEY`** in either the **repo root** `.env` or `apps/api/.env` (see [`.env.example`](./.env.example)). The API loads both; `apps/api/.env` wins if a variable is set in both. A root **`REACT_APP_API_KEY`** from the old CRA setup is still accepted as the Spoonacular key. Add **`GEMINI_API_KEY`** if you want AI features (optional **`GEMINI_MODEL`**, default **`gemini-3-flash-preview`** — use the exact model id from [Google AI Studio](https://aistudio.google.com/) if you see **404** on `generateContent`). If Gemini returns **fetch failed**, check VPN/firewall/proxy or **`HTTPS_PROXY`**.
 
 2. Install and run API + web together:
 

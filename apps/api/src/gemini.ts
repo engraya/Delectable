@@ -130,7 +130,7 @@ export async function geminiGenerate(
           "Cannot reach Google Gemini (generativelanguage.googleapis.com).",
           "Check: internet connection, VPN, firewall, corporate proxy.",
           "If you use a proxy, set HTTPS_PROXY (and NO_PROXY for localhost).",
-          "Try GEMINI_MODEL=gemini-1.5-flash if the model endpoint is blocked in your region.",
+          "If the model 404s, set GEMINI_MODEL to a current id from Google AI Studio (e.g. gemini-3-flash-preview).",
           errno ? `System code: ${errno}.` : "",
           detail ? `Detail: ${detail.slice(0, 400)}` : "",
         ]
