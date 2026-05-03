@@ -4,7 +4,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { z } from "zod";
-import { getAllowedOrigins, loadEnv } from "./env.js";
+import { getAllowedOrigins, loadEnv, normalizeOrigin } from "./env.js";
 import { geminiGenerate, GeminiNetworkError } from "./gemini.js";
 import { checkRateLimit, clientKey } from "./rateLimit.js";
 import {
@@ -43,7 +43,8 @@ app.use(
   cors({
     origin: (origin) => {
       if (!origin) return allowed[0] ?? "*";
-      return allowed.includes(origin) ? origin : allowed[0] ?? origin;
+      // Must reflect the request Origin exactly when allowed; never substitute another origin.
+      return allowed.includes(normalizeOrigin(origin)) ? origin : null;
     },
     allowMethods: ["GET", "POST", "OPTIONS"],
     allowHeaders: ["Content-Type"],

@@ -7,13 +7,13 @@ export const LANDING_IMAGES = {
   hero2:
     "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=800&fit=crop&q=80",
   grid1:
-    "https://images.unsplash.com/photo-1476224206411-9a39feb27ae8?w=600&h=500&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600&h=500&fit=crop&q=80",
   grid2:
     "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&h=500&fit=crop&q=80",
   grid3:
-    "https://images.unsplash.com/photo-1512621776951-ac57121f1187?w=600&h=500&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=500&fit=crop&q=80",
   grid4:
-    "https://images.unsplash.com/photo-1493770348161-369560108357?w=600&h=500&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=600&h=500&fit=crop&q=80",
   grid5:
     "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&h=500&fit=crop&q=80",
   grid6:

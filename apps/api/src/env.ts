@@ -21,6 +21,14 @@ export function loadEnv(): Env {
   return parsed.data;
 }
 
+/** Browser Origin never includes a trailing slash; env values sometimes do. */
+export function normalizeOrigin(origin: string): string {
+  const s = origin.trim();
+  return s.endsWith("/") ? s.slice(0, -1) : s;
+}
+
 export function getAllowedOrigins(env: Env): string[] {
-  return env.ALLOWED_ORIGINS.split(",").map((s) => s.trim()).filter(Boolean);
+  return env.ALLOWED_ORIGINS.split(",")
+    .map((s) => normalizeOrigin(s))
+    .filter(Boolean);
 }
