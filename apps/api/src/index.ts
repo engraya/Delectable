@@ -1,11 +1,16 @@
 import "./bootstrapEnv.js";
+import { SchemaType, type ResponseSchema } from "@google/generative-ai";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { z } from "zod";
 import { getAllowedOrigins, loadEnv, normalizeOrigin } from "./env.js";
-import { geminiGenerate, GeminiNetworkError } from "./gemini.js";
+import {
+  geminiGenerate,
+  GeminiNetworkError,
+  parseJsonFromModelText,
+} from "./gemini.js";
 import { checkRateLimit, clientKey } from "./rateLimit.js";
 import {
   complexSearchResponseSchema,
@@ -23,6 +28,19 @@ import {
 
 const env = loadEnv();
 const allowed = getAllowedOrigins(env);
+
+/** Gemini structured output for `/api/ai/search-parse` (optional keys match Zod schema). */
+const searchParseGeminiSchema = {
+  type: SchemaType.OBJECT,
+  properties: {
+    query: { type: SchemaType.STRING, description: "Main recipe search keywords" },
+    cuisine: { type: SchemaType.STRING },
+    diet: { type: SchemaType.STRING },
+    intolerances: { type: SchemaType.STRING },
+    maxReadyTime: { type: SchemaType.INTEGER },
+    number: { type: SchemaType.INTEGER },
+  },
+} as ResponseSchema;
 
 const app = new Hono();
 
@@ -262,13 +280,13 @@ app.post("/api/ai/search-parse", async (c) => {
   }
   try {
     const systemInstruction = `You map a user's natural-language recipe search into JSON parameters for the Spoonacular complexSearch API.
-Respond with ONLY a JSON object (no markdown) using these optional keys:
-- query: string (main keywords)
+Use only these optional fields in the JSON output:
+- query: main keywords
 - cuisine: one of african american chinese french indian italian japanese korean mexican thai vietnamese mediterranean european asian (lowercase) or omit
 - diet: one of ketogenic vegetarian vegan pescetarian paleo primal whole30 gluten free (lowercase) or omit
-- intolerances: comma-separated e.g. "dairy,gluten" or omit
-- maxReadyTime: number (minutes, 1-240)
-- number: number of results 1-30 (default 16)
+- intolerances: comma-separated e.g. dairy,gluten or omit
+- maxReadyTime: minutes 1-240
+- number: result count 1-30 (default 16 when unsure)
 
 If the user is vague, still infer reasonable query keywords.`;
 
@@ -277,13 +295,16 @@ If the user is vague, still infer reasonable query keywords.`;
       userText: `User request: ${body.naturalLanguageQuery}`,
       maxOutputTokens: 300,
       temperature: 0.2,
+      responseMimeType: "application/json",
+      responseSchema: searchParseGeminiSchema,
     });
 
-    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
+    let parsedJson: unknown;
+    try {
+      parsedJson = parseJsonFromModelText(raw);
+    } catch {
       return c.json({ error: "Could not parse AI response" }, 502);
     }
-    const parsedJson: unknown = JSON.parse(jsonMatch[0]);
     const parsed = searchParseResultSchema.safeParse(parsedJson);
     if (!parsed.success) {
       return c.json({ error: "Invalid structured output" }, 502);

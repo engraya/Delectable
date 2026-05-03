@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, type ResponseSchema } from "@google/generative-ai";
 import type { Env } from "./env.js";
 
 export type GeminiGenerateOptions = {
@@ -8,6 +8,9 @@ export type GeminiGenerateOptions = {
   userText: string;
   maxOutputTokens?: number;
   temperature?: number;
+  /** When `application/json`, the model returns JSON only (optionally constrained by responseSchema). */
+  responseMimeType?: string;
+  responseSchema?: ResponseSchema;
 };
 
 /** Low-level connection failure (DNS, TLS, firewall, proxy, offline). */
@@ -61,6 +64,61 @@ function errnoFromChain(err: unknown): string | undefined {
   return undefined;
 }
 
+function stripMarkdownFence(s: string): string {
+  const t = s.trim();
+  if (!t.startsWith("```")) return t;
+  const withoutOpen = t.replace(/^```[a-z]*\s*\n?/i, "");
+  return withoutOpen.replace(/\n?```\s*$/i, "").trim();
+}
+
+/** First top-level `{ ... }` slice, ignoring `{`/`}` inside JSON strings. */
+function extractBalancedJsonObject(s: string): string | null {
+  const start = s.indexOf("{");
+  if (start === -1) return null;
+  let depth = 0;
+  let inString = false;
+  let escape = false;
+  for (let i = start; i < s.length; i++) {
+    const c = s[i];
+    if (inString) {
+      if (escape) {
+        escape = false;
+        continue;
+      }
+      if (c === "\\") {
+        escape = true;
+        continue;
+      }
+      if (c === '"') inString = false;
+      continue;
+    }
+    if (c === '"') {
+      inString = true;
+      continue;
+    }
+    if (c === "{") depth++;
+    else if (c === "}") {
+      depth--;
+      if (depth === 0) return s.slice(start, i + 1);
+    }
+  }
+  return null;
+}
+
+/**
+ * Parse JSON from a model string (markdown fences, preamble, or trailing text).
+ */
+export function parseJsonFromModelText(text: string): unknown {
+  const s = stripMarkdownFence(text);
+  try {
+    return JSON.parse(s);
+  } catch {
+    const obj = extractBalancedJsonObject(s);
+    if (obj) return JSON.parse(obj);
+    throw new SyntaxError("Could not parse model output as JSON");
+  }
+}
+
 function isLikelyTransportFailure(messages: string[], errno?: string): boolean {
   const joined = messages.join(" ").toLowerCase();
   if (
@@ -109,6 +167,10 @@ export async function geminiGenerate(
     generationConfig: {
       maxOutputTokens: options.maxOutputTokens ?? 1024,
       temperature: options.temperature ?? 0.4,
+      ...(options.responseMimeType
+        ? { responseMimeType: options.responseMimeType }
+        : {}),
+      ...(options.responseSchema ? { responseSchema: options.responseSchema } : {}),
     },
   });
 
