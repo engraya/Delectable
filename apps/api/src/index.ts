@@ -5,7 +5,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { z } from "zod";
 import { getAllowedOrigins, loadEnv } from "./env.js";
-import { chatCompletion } from "./openai.js";
+import { geminiGenerate, GeminiNetworkError } from "./gemini.js";
 import { checkRateLimit, clientKey } from "./rateLimit.js";
 import {
   complexSearchResponseSchema,
@@ -29,6 +29,9 @@ const app = new Hono();
 app.onError((err, c) => {
   console.error(err);
   if (err instanceof SpoonacularNetworkError) {
+    return c.json({ error: err.message, code: err.code }, 503);
+  }
+  if (err instanceof GeminiNetworkError) {
     return c.json({ error: err.message, code: err.code }, 503);
   }
   return c.json({ error: "Internal server error" }, 500);
@@ -228,16 +231,16 @@ app.post("/api/ai/recipe-assist", async (c) => {
       .filter(Boolean)
       .join("\n");
 
-    const system = `You are a careful cooking assistant for the Delectable app. Use only the recipe context; if information is missing, say so. Do not give medical or allergy guarantees—suggest the user verify allergens. Be concise; use short bullets when listing steps or substitutions.`;
+    const systemInstruction = `You are a careful cooking assistant for the Delectable app. Use only the recipe context; if information is missing, say so. Do not give medical or allergy guarantees—suggest the user verify allergens. Be concise; use short bullets when listing steps or substitutions.`;
 
-    const messages = [
-      { role: "system" as const, content: system },
-      {
-        role: "user" as const,
-        content: `Recipe context:\n${context}\n\nConversation:\n${body.messages.map((m) => `${m.role}: ${m.content}`).join("\n")}`,
-      },
-    ];
-    const reply = await chatCompletion(env, messages, { maxTokens: 900 });
+    const userText = `Recipe context:\n${context}\n\nConversation:\n${body.messages.map((m) => `${m.role}: ${m.content}`).join("\n")}`;
+
+    const reply = await geminiGenerate(env, {
+      systemInstruction,
+      userText,
+      maxOutputTokens: 900,
+      temperature: 0.4,
+    });
     return c.json({ reply });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "AI error";
@@ -257,7 +260,7 @@ app.post("/api/ai/search-parse", async (c) => {
     return c.json({ error: "Invalid request body" }, 400);
   }
   try {
-    const system = `You map a user's natural-language recipe search into JSON parameters for the Spoonacular complexSearch API.
+    const systemInstruction = `You map a user's natural-language recipe search into JSON parameters for the Spoonacular complexSearch API.
 Respond with ONLY a JSON object (no markdown) using these optional keys:
 - query: string (main keywords)
 - cuisine: one of african american chinese french indian italian japanese korean mexican thai vietnamese mediterranean european asian (lowercase) or omit
@@ -268,17 +271,12 @@ Respond with ONLY a JSON object (no markdown) using these optional keys:
 
 If the user is vague, still infer reasonable query keywords.`;
 
-    const raw = await chatCompletion(
-      env,
-      [
-        { role: "system", content: system },
-        {
-          role: "user",
-          content: `User request: ${body.naturalLanguageQuery}`,
-        },
-      ],
-      { maxTokens: 300, temperature: 0.2 }
-    );
+    const raw = await geminiGenerate(env, {
+      systemInstruction,
+      userText: `User request: ${body.naturalLanguageQuery}`,
+      maxOutputTokens: 300,
+      temperature: 0.2,
+    });
 
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {

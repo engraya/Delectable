@@ -3,10 +3,10 @@ import { z } from "zod";
 const envSchema = z.object({
   PORT: z.coerce.number().default(8787),
   SPOONACULAR_API_KEY: z.string().min(1, "SPOONACULAR_API_KEY is required"),
-  OPENAI_API_KEY: z.string().optional(),
-  /** e.g. https://api.openai.com/v1 or compatible proxy; omit for OpenAI default */
-  OPENAI_BASE_URL: z.string().optional(),
-  OPENAI_MODEL: z.string().default("gpt-4o-mini"),
+  /** Google AI Studio / Gemini API key for recipe copilot and smart search */
+  GEMINI_API_KEY: z.string().optional(),
+  /** e.g. gemini-1.5-flash (widest reach), gemini-2.0-flash — see Google AI model docs */
+  GEMINI_MODEL: z.string().default("gemini-1.5-flash"),
   ALLOWED_ORIGINS: z.string().default("http://localhost:5173"),
 });
 
