@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, type To } from "react-router-dom";
 import { HiBars3, HiXMark } from "react-icons/hi2";
+import { BrandLogo } from "@/components/BrandLogo";
 import { DarkModeToggle } from "@/layouts/DarkMode/DarkModeToggle";
 import { BRAND } from "@/shared/lib/brand";
 import { cn } from "@/shared/lib/cn";
@@ -79,8 +80,8 @@ export function NavBar() {
           aria-label={`${BRAND.name} home`}
           className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-active font-display text-xs font-bold text-primary-fg shadow-md shadow-primary/25 dark:from-primary dark:to-teal-600 dark:shadow-primary/20">
-            DA
+          <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl shadow-md shadow-primary/20 ring-1 ring-black/5 transition group-hover:shadow-lg group-hover:shadow-primary/25 dark:ring-white/10">
+            <BrandLogo size={36} className="rounded-xl" />
           </span>
           <span className="flex flex-col leading-none sm:flex-row sm:items-baseline sm:gap-1.5">
             <span className="font-display text-lg font-semibold tracking-tight text-fg">
