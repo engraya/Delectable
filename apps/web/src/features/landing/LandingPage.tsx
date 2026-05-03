@@ -1,0 +1,140 @@
+import { Link } from "react-router-dom";
+import { SquigglyLines } from "@/components/SquigglyLines";
+import a from "@/images/a.jpg";
+import b from "@/images/b.jpg";
+import c from "@/images/c.jpg";
+import d from "@/images/d.jpg";
+import e from "@/images/e.jpg";
+import f from "@/images/f.jpg";
+import g from "@/images/g.jpg";
+import h from "@/images/h.jpg";
+import i from "@/images/i.jpg";
+import j from "@/images/j.jpg";
+import icon from "@/images/food.png";
+import author from "@/images/aya.png";
+
+const githubRepoUrl = "https://github.com/engraya/delectable-food-webapp";
+
+export function LandingPage() {
+  return (
+    <div>
+      <div
+        className="absolute inset-x-0 -top-40 transform-gpu overflow-hidden blur-3xl sm:-top-80 sm:p-12"
+        aria-hidden="true"
+      >
+        <div
+          className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#7984b6] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+          style={{
+            clipPath:
+              "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+          }}
+        />
+      </div>
+      <div className="hidden sm:mb-8 sm:flex sm:justify-center mt-12">
+        <div className="relative rounded-full px-3 py-1 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+          Announcing our next round of Open Source Projects.{" "}
+          <a
+            href={githubRepoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-indigo-600"
+          >
+            <span className="absolute inset-0" aria-hidden="true" />
+            Read more <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+      <div className="text-center m-6">
+        <h1 className="mx-auto max-w-4xl font-display text-3xl font-bold tracking-normal text-slate-900 dark:text-slate-100 sm:text-5xl">
+          Embark on a Gastronomic Journey with{" "}
+          <span className="relative whitespace-nowrap text-[#60b8c4]">
+            <SquigglyLines />
+            <span className="relative">Delectable</span>
+          </span>
+        </h1>
+        <p className="mt-6 text-lg leading-8 sm:p-6 lg:px-48 text-slate-700 dark:text-slate-300">
+          Explore a vast database of global cuisines, from traditional to
+          contemporary. Learn the secrets behind your favorite dishes with
+          detailed recipes and cooking tips.
+        </p>
+        <div className="mt-10 mb-8 flex items-center justify-center gap-x-6">
+          <Link
+            to="/trending"
+            className="px-4 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg"
+          >
+            Get started <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:p-12 lg:px-48">
+          <div>
+            <img className="h-auto rounded-lg" src={a} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={b} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={c} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={d} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={e} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={f} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={g} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={h} alt="" />
+          </div>
+          <div>
+            <img className="h-auto rounded-lg" src={i} alt="" />
+          </div>
+          <div className="md:hidden flex">
+            <img className="h-auto rounded-lg" src={j} alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-2xl lg:max-w-4xl mb-36">
+        <p className="mt-0 text-lg leading-8 text-center sm:p-6 text-slate-700 dark:text-slate-300">
+          At Delectable, we believe in the power of food to connect, inspire, and
+          delight. Our platform is a tribute to the rich tapestry of global
+          culinary traditions.
+        </p>
+        <img className="mx-auto h-12" src={icon} alt="" />
+        <figure className="mt-10">
+          <blockquote className="text-center text-xl font-semibold leading-8 sm:text-2xl sm:leading-9 text-slate-800 dark:text-slate-200">
+            <p>
+              “As a food enthusiast, Delectable is my go-to source for discovering
+              new recipes and learning about different cuisines.”
+            </p>
+          </blockquote>
+          <figcaption className="mt-10">
+            <img
+              className="mx-auto h-10 w-10 rounded-full"
+              src={author}
+              alt=""
+            />
+            <div className="mt-4 flex items-center justify-center space-x-3 text-base text-slate-600 dark:text-slate-400">
+              <div className="font-semibold">engr_aya</div>
+              <svg
+                viewBox="0 0 2 2"
+                width={3}
+                height={3}
+                aria-hidden="true"
+                className=""
+              >
+                <circle cx={1} cy={1} r={1} />
+              </svg>
+              <div>Fullstack Engineer</div>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  );
+}

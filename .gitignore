@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+/apps/node_modules
+/apps/api/node_modules
+/apps/web/node_modules
 /.pnp
 .pnp.js
 
@@ -10,6 +13,8 @@
 
 # production
 /build
+apps/web/dist
+apps/api/dist
 
 # misc
 .DS_Store
@@ -17,7 +22,14 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+node_modules
+apps/api/node_modules
+apps/web/node_modules
+apps/api/dist
+apps/web/dist
