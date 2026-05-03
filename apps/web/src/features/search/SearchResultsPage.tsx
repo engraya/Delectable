@@ -1,11 +1,13 @@
+import { Link, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import { HiMagnifyingGlass } from "react-icons/hi2";
 import { RecipeCard } from "@/features/recipes/RecipeCard";
 import { searchRecipes, searchRecipesComplex } from "@/shared/api/recipes";
 import { PagesContainer } from "@/shared/layout/PagesContainer";
 import { EmptyState } from "@/shared/ui/EmptyState";
+import { PageHeader } from "@/shared/ui/PageHeader";
 import { QueryError } from "@/shared/ui/QueryError";
-import { Spinner } from "@/shared/ui/Spinner";
+import { RecipeGridSkeleton } from "@/shared/ui/RecipeGridSkeleton";
 
 export function SearchResultsPage() {
   const [params] = useSearchParams();
@@ -54,16 +56,43 @@ export function SearchResultsPage() {
   if (!enabled) {
     return (
       <PagesContainer>
-        <EmptyState
-          title="No search yet"
-          description="Enter a keyword in the search bar or use AI smart search from the Cuisines page."
+        <PageHeader
+          eyebrow="Search"
+          title="Start with a keyword or AI filters"
+          description="Run a search from the home hero, cuisines page, or paste a URL with query parameters."
         />
+        <EmptyState
+          title="No active search"
+          description="Try a dish name or ingredient, or use AI smart search on the Cuisines page to build filters from a sentence."
+          icon={<HiMagnifyingGlass className="h-6 w-6" aria-hidden />}
+        />
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <Link
+            to="/"
+            className="inline-flex h-10 items-center rounded-xl border border-border bg-surface-elevated px-4 text-sm font-medium text-fg shadow-sm transition hover:bg-surface-muted"
+          >
+            Back to home
+          </Link>
+          <Link
+            to="/cuisines"
+            className="inline-flex h-10 items-center rounded-xl bg-primary px-4 text-sm font-semibold text-primary-fg shadow-sm transition hover:bg-primary-hover"
+          >
+            Open cuisines & search
+          </Link>
+        </div>
       </PagesContainer>
     );
   }
 
+  const title = q.trim() ? `Results for “${q.trim()}”` : "Search results";
+
   if (isPending) {
-    return <Spinner label="Loading search results" />;
+    return (
+      <PagesContainer>
+        <PageHeader eyebrow="Search" title={title} />
+        <RecipeGridSkeleton count={9} />
+      </PagesContainer>
+    );
   }
   if (isError) {
     return (
@@ -76,24 +105,28 @@ export function SearchResultsPage() {
     );
   }
 
-  const title = q || "Search results";
-
   return (
     <PagesContainer>
-      <h1 className="text-center font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-4xl">
-        {title}
-      </h1>
+      <PageHeader
+        eyebrow="Search"
+        title={title}
+        description={
+          hasComplex
+            ? "Filtered with additional constraints from your last AI or manual selection."
+            : "Keyword match across the catalog. Refine by opening a recipe or running smart search."
+        }
+      />
       {data.results.length === 0 ? (
-        <div className="mt-8">
-          <EmptyState title="No recipes found" />
-        </div>
+        <EmptyState
+          title="No recipes matched"
+          description="Broaden the keyword, remove a filter, or try a different cuisine."
+          icon={<HiMagnifyingGlass className="h-6 w-6" aria-hidden />}
+        />
       ) : (
-        <div className="max-w-screen-xl mx-auto p-5 sm:p-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            {data.results.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {data.results.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
         </div>
       )}
     </PagesContainer>

@@ -1,4 +1,5 @@
 import downloadPic from "@/images/download.svg";
+import { Button } from "@/shared/ui/Button";
 
 export function ImageDownloader({
   imageUrl,
@@ -17,14 +18,16 @@ export function ImageDownloader({
   };
 
   return (
-    <button
+    <Button
       type="button"
+      variant="secondary"
+      size="sm"
+      className="rounded-xl px-3"
       onClick={handleDownload}
-      className="inline-flex items-center justify-center"
       aria-label="Download recipe image"
       disabled={!imageUrl}
     >
-      <img src={downloadPic} className="h-7 w-7" alt="" />
-    </button>
+      <img src={downloadPic} className="h-5 w-5 dark:invert" alt="" />
+    </Button>
   );
 }

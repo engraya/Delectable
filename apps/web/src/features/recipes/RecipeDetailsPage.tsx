@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
-import { GrFormPreviousLink } from "react-icons/gr";
+import { HiArrowLeft, HiClock, HiHeart, HiDocumentArrowDown } from "react-icons/hi2";
 import jsPDF from "jspdf";
 import { RecipeCopilot } from "@/features/ai/RecipeCopilot";
 import { ImageDownloader } from "@/features/recipes/ImageDownloader";
@@ -8,7 +8,18 @@ import { fetchRecipeById } from "@/shared/api/recipes";
 import { sanitizeRecipeHtml } from "@/shared/lib/sanitize";
 import { PagesContainer } from "@/shared/layout/PagesContainer";
 import { QueryError } from "@/shared/ui/QueryError";
-import { Spinner } from "@/shared/ui/Spinner";
+import { Skeleton } from "@/shared/ui/Skeleton";
+import { Button } from "@/shared/ui/Button";
+import { Card } from "@/shared/ui/Card";
+
+function MetaChip({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-border py-2.5 text-sm last:border-0">
+      <span className="text-fg-muted">{label}</span>
+      <span className="font-medium text-fg">{value}</span>
+    </div>
+  );
+}
 
 export function RecipeDetailsPage() {
   const { id: idParam } = useParams();
@@ -31,10 +42,10 @@ export function RecipeDetailsPage() {
         /* ignore image errors in PDF */
       }
     }
-    pdf.setTextColor("green");
+    pdf.setTextColor(0, 120, 100);
     pdf.text(`Name: ${recipe.title}`, 20, 130);
     pdf.setFontSize(16);
-    pdf.setTextColor(100);
+    pdf.setTextColor(80);
     pdf.text(`Health score: ${recipe.healthScore ?? "—"}`, 20, 140);
     pdf.text(`Dairy free: ${recipe.dairyFree ? "Yes" : "No"}`, 20, 150);
     pdf.text(`Gluten free: ${recipe.glutenFree ? "Yes" : "No"}`, 20, 160);
@@ -63,7 +74,24 @@ export function RecipeDetailsPage() {
   }
 
   if (isPending) {
-    return <Spinner label="Loading recipe" />;
+    return (
+      <PagesContainer>
+        <div className="mb-8 flex items-center gap-3">
+          <div className="h-10 w-24 animate-pulse rounded-lg bg-surface-muted" />
+        </div>
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+          <div className="space-y-4 lg:col-span-7">
+            <Skeleton className="aspect-[16/10] w-full rounded-2xl sm:aspect-[16/9]" />
+            <Skeleton className="h-10 w-3/4 rounded-lg" />
+            <Skeleton className="h-32 w-full rounded-2xl" />
+          </div>
+          <div className="space-y-4 lg:col-span-5">
+            <Skeleton className="h-64 w-full rounded-2xl" />
+            <Skeleton className="h-40 w-full rounded-2xl" />
+          </div>
+        </div>
+      </PagesContainer>
+    );
   }
   if (isError) {
     return (
@@ -78,150 +106,162 @@ export function RecipeDetailsPage() {
 
   const safeSummary = sanitizeRecipeHtml(recipe.summary);
   const safeInstructions = sanitizeRecipeHtml(recipe.instructions);
+  const ready = recipe.readyInMinutes != null ? `${recipe.readyInMinutes} min` : "—";
 
   return (
-    <PagesContainer>
-      <nav aria-label="Breadcrumb">
-        <ol
-          role="list"
-          className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
+    <PagesContainer className="pb-16">
+      <nav aria-label="Breadcrumb" className="mb-6">
+        <Link
+          to="/trending"
+          className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface-elevated px-3 py-2 text-sm font-medium text-fg-muted shadow-sm transition hover:border-primary/40 hover:bg-surface-muted hover:text-fg"
         >
-          <li>
-            <Link
-              to="/trending"
-              className="text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-              aria-label="Back to trending"
-            >
-              <GrFormPreviousLink aria-hidden />
-            </Link>
-          </li>
-        </ol>
+          <HiArrowLeft className="h-4 w-4" aria-hidden />
+          Back to discovery
+        </Link>
       </nav>
 
-      <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-        <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-          {recipe.image ? (
-            <img
-              src={recipe.image}
-              alt=""
-              className="h-full w-full object-cover object-center"
-            />
-          ) : null}
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
-        <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 dark:lg:border-gray-700">
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl text-slate-900 dark:text-slate-100">
-            {recipe.title}
-          </h1>
-        </div>
-
-        <div className="mt-4 lg:row-span-3 lg:mt-0">
-          <h2 className="sr-only">Recipe metadata</h2>
-          <p className="text-2xl tracking-tight text-cyan-600">Details</p>
-          <hr className="dark:border-gray-600" />
-          <dl className="mt-5 space-y-2 text-sm">
-            <div className="flex justify-between">
-              <dt className="font-medium text-cyan-600">Health score</dt>
-              <dd className="text-gray-600 dark:text-gray-400">
-                {recipe.healthScore ?? "—"}
-              </dd>
-            </div>
-            <div className="flex justify-between">
-              <dt className="font-medium text-cyan-600">Dairy free</dt>
-              <dd className="text-gray-600 dark:text-gray-400">
-                {recipe.dairyFree ? "Yes" : "No"}
-              </dd>
-            </div>
-            <div className="flex justify-between">
-              <dt className="font-medium text-cyan-600">Gluten free</dt>
-              <dd className="text-gray-600 dark:text-gray-400">
-                {recipe.glutenFree ? "Yes" : "No"}
-              </dd>
-            </div>
-            <div className="flex justify-between">
-              <dt className="font-medium text-cyan-600">Vegetarian</dt>
-              <dd className="text-gray-600 dark:text-gray-400">
-                {recipe.vegetarian ? "Yes" : "No"}
-              </dd>
-            </div>
-            <div className="flex justify-between">
-              <dt className="font-medium text-cyan-600">Very healthy</dt>
-              <dd className="text-gray-600 dark:text-gray-400">
-                {recipe.veryHealthy ? "Yes" : "No"}
-              </dd>
-            </div>
-            <div className="flex justify-between">
-              <dt className="font-medium text-cyan-600">Ready in minutes</dt>
-              <dd className="text-gray-600 dark:text-gray-400">
-                {recipe.readyInMinutes ?? "—"}
-              </dd>
-            </div>
-          </dl>
-
-          <button
-            type="button"
-            onClick={generatePdf}
-            className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
-          >
-            Download PDF
-          </button>
-          <div className="mt-6 flex w-full flex-col items-center justify-center gap-2 rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white">
-            <span className="text-center">Download image</span>
-            <ImageDownloader imageUrl={recipe.image} filename={recipe.title} />
-          </div>
-        </div>
-
-        <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6 dark:lg:border-gray-700">
-          <div className="mb-12 mt-3">
-            <hr className="dark:border-gray-600" />
-            <h3 className="font-serif font-bold mt-4 text-cyan-600 underline">
-              Summary
-            </h3>
-            {safeSummary ? (
-              <div
-                className="max-w-none text-sm text-gray-600 dark:text-gray-300 [&_a]:text-cyan-600 [&_a]:underline"
-                dangerouslySetInnerHTML={{ __html: safeSummary }}
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-7">
+          <div className="overflow-hidden rounded-2xl border border-border bg-surface-elevated shadow-card">
+            {recipe.image ? (
+              <img
+                src={recipe.image}
+                alt=""
+                className="aspect-[16/10] w-full object-cover sm:aspect-[16/9]"
               />
             ) : (
-              <p className="text-gray-500">No summary.</p>
-            )}
-          </div>
-          <hr className="dark:border-gray-600" />
-          <div>
-            <h3 className="font-serif font-bold mt-4 text-cyan-600 underline">
-              Cooking instructions
-            </h3>
-            {safeInstructions ? (
-              <div
-                className="max-w-none text-sm text-gray-600 dark:text-gray-300 [&_a]:text-cyan-600 [&_a]:underline"
-                dangerouslySetInnerHTML={{ __html: safeInstructions }}
-              />
-            ) : (
-              <p className="text-gray-500">No instructions listed.</p>
+              <div className="flex aspect-[16/10] items-center justify-center bg-surface-muted text-sm text-fg-subtle sm:aspect-[16/9]">
+                No hero image
+              </div>
             )}
           </div>
 
-          <div className="mt-10">
-            <hr className="dark:border-gray-600" />
-            <h3 className="font-serif font-bold mt-4 text-cyan-600 underline">
-              Ingredients
-            </h3>
-            <ul
-              role="list"
-              className="list-disc space-y-2 pl-4 text-sm text-gray-600 dark:text-gray-300"
-            >
-              {recipe.extendedIngredients?.map((ingredient) => (
-                <li key={`${ingredient.id}-${ingredient.original}`}>
-                  {ingredient.original}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <header className="mt-8">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+              Recipe
+            </p>
+            <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+              {recipe.title}
+            </h1>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-muted px-3 py-1 text-xs font-medium text-fg-muted">
+                <HiClock className="h-3.5 w-3.5" aria-hidden />
+                {ready}
+              </span>
+              {recipe.veryHealthy ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-success/30 bg-success-muted/40 px-3 py-1 text-xs font-medium text-success dark:bg-success-muted/20">
+                  <HiHeart className="h-3.5 w-3.5" aria-hidden />
+                  Very healthy
+                </span>
+              ) : null}
+            </div>
+          </header>
 
-          <RecipeCopilot recipe={recipe} />
+          <section className="mt-10 space-y-10">
+            <div>
+              <h2 className="text-lg font-semibold text-fg">Summary</h2>
+              {safeSummary ? (
+                <div
+                  className="prose-recipe mt-3 max-w-none text-sm leading-relaxed text-fg-muted [&_a]:font-medium [&_a]:text-primary [&_a]:underline-offset-2 hover:[&_a]:underline"
+                  dangerouslySetInnerHTML={{ __html: safeSummary }}
+                />
+              ) : (
+                <p className="mt-3 text-sm text-fg-subtle">No summary for this dish.</p>
+              )}
+            </div>
+
+            <div>
+              <h2 className="text-lg font-semibold text-fg">Cooking instructions</h2>
+              {safeInstructions ? (
+                <div
+                  className="prose-recipe mt-3 max-w-none text-sm leading-relaxed text-fg-muted [&_a]:font-medium [&_a]:text-primary [&_a]:underline-offset-2 hover:[&_a]:underline"
+                  dangerouslySetInnerHTML={{ __html: safeInstructions }}
+                />
+              ) : (
+                <p className="mt-3 text-sm text-fg-subtle">
+                  No written instructions—check ingredients and copilot for ideas.
+                </p>
+              )}
+            </div>
+
+            <div>
+              <h2 className="text-lg font-semibold text-fg">Ingredients</h2>
+              <ul
+                role="list"
+                className="mt-4 divide-y divide-border rounded-2xl border border-border bg-surface-elevated"
+              >
+                {recipe.extendedIngredients?.map((ingredient) => (
+                  <li
+                    key={`${ingredient.id}-${ingredient.original}`}
+                    className="px-4 py-3 text-sm text-fg-muted"
+                  >
+                    {ingredient.original}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <RecipeCopilot recipe={recipe} />
+          </section>
         </div>
+
+        <aside className="lg:col-span-5">
+          <div className="sticky top-24 space-y-4">
+            <Card className="p-5 sm:p-6">
+              <h2 className="text-sm font-semibold text-fg">At a glance</h2>
+              <p className="mt-1 text-xs text-fg-muted">
+                Diet flags and scoring help you decide before you scroll the steps.
+              </p>
+              <div className="mt-4">
+                <MetaChip
+                  label="Health score"
+                  value={recipe.healthScore != null ? String(recipe.healthScore) : "—"}
+                />
+                <MetaChip
+                  label="Dairy free"
+                  value={recipe.dairyFree ? "Yes" : "No"}
+                />
+                <MetaChip
+                  label="Gluten free"
+                  value={recipe.glutenFree ? "Yes" : "No"}
+                />
+                <MetaChip
+                  label="Vegetarian"
+                  value={recipe.vegetarian ? "Yes" : "No"}
+                />
+                <MetaChip
+                  label="Very healthy"
+                  value={recipe.veryHealthy ? "Yes" : "No"}
+                />
+                <MetaChip
+                  label="Ready in"
+                  value={ready}
+                />
+              </div>
+            </Card>
+
+            <Card className="p-5 sm:p-6">
+              <h2 className="text-sm font-semibold text-fg">Export</h2>
+              <p className="mt-1 text-xs text-fg-muted">
+                Download a quick PDF summary or save the hero image for offline use.
+              </p>
+              <div className="mt-4 flex flex-col gap-2">
+                <Button
+                  type="button"
+                  className="w-full justify-center gap-2 rounded-xl"
+                  onClick={generatePdf}
+                >
+                  <HiDocumentArrowDown className="h-4 w-4" aria-hidden />
+                  Download PDF
+                </Button>
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface-muted/50 px-4 py-3 dark:bg-surface-muted/30">
+                  <span className="text-sm font-medium text-fg">Hero image</span>
+                  <ImageDownloader imageUrl={recipe.image} filename={recipe.title} />
+                </div>
+              </div>
+            </Card>
+          </div>
+        </aside>
       </div>
     </PagesContainer>
   );

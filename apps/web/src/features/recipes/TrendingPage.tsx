@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchTrendingRecipes } from "@/shared/api/recipes";
 import { PagesContainer } from "@/shared/layout/PagesContainer";
+import { PageHeader } from "@/shared/ui/PageHeader";
 import { QueryError } from "@/shared/ui/QueryError";
-import { Spinner } from "@/shared/ui/Spinner";
+import { RecipeGridSkeleton } from "@/shared/ui/RecipeGridSkeleton";
 import { RecipeCard } from "@/features/recipes/RecipeCard";
 
 export function TrendingPage() {
@@ -13,7 +14,16 @@ export function TrendingPage() {
   });
 
   if (isPending) {
-    return <Spinner label="Loading trending recipes" />;
+    return (
+      <PagesContainer>
+        <PageHeader
+          eyebrow="Discover"
+          title="Trending recipes"
+          description="What home cooks are opening right now—updated on a short cache so pages stay snappy."
+        />
+        <RecipeGridSkeleton count={9} />
+      </PagesContainer>
+    );
   }
   if (isError) {
     return (
@@ -28,15 +38,15 @@ export function TrendingPage() {
 
   return (
     <PagesContainer>
-      <h1 className="text-center font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-4xl">
-        Trending recipes
-      </h1>
-      <div className="max-w-screen-xl mx-auto p-5 sm:p-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-          {data.recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
+      <PageHeader
+        eyebrow="Discover"
+        title="Trending recipes"
+        description="A high-signal grid with fast scan, clear titles, and imagery that stays respectful of your attention."
+      />
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {data.recipes.map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} />
+        ))}
       </div>
     </PagesContainer>
   );

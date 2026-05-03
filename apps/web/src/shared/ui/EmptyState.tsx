@@ -1,23 +1,28 @@
+import type { ReactNode } from "react";
+import { Card } from "@/shared/ui/Card";
+
 export function EmptyState({
   title,
   description,
+  icon,
 }: {
   title: string;
   description?: string;
+  icon?: ReactNode;
 }) {
   return (
-    <div
-      className="rounded-lg border border-dashed border-gray-300 dark:border-gray-600 p-8 text-center"
-      role="status"
-    >
-      <p className="text-lg font-medium text-slate-800 dark:text-slate-100">
-        {title}
-      </p>
+    <Card className="p-10 text-center" role="status">
+      {icon ? (
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-surface-muted text-fg-muted">
+          {icon}
+        </div>
+      ) : null}
+      <p className="text-lg font-semibold text-fg">{title}</p>
       {description ? (
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-fg-muted">
           {description}
         </p>
       ) : null}
-    </div>
+    </Card>
   );
 }

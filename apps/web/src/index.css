@@ -2,28 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --body_background: white;
-  --body_color: black;
-  --link_color: #7481e4;
-}
+@layer base {
+  :root {
+    --canvas: 250 250 249;
+    --fg: 24 24 27;
+    --fg-muted: 82 82 91;
+    --fg-subtle: 113 113 122;
+    --border: 228 228 231;
+    --ring: 13 148 136;
 
-.dark {
-  --body_background: #1c1e21;
-  --body_color: white;
-  --link_color: rgb(200, 235, 235);
-}
+    --primary: 13 148 136;
+    --primary-fg: 255 255 255;
+    --primary-hover: 15 118 110;
+    --primary-active: 17 94 89;
+    --primary-muted: 204 251 241;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: var(--link_color);
-  background-color: var(--body_background);
-}
+    --accent: 217 119 6;
+    --accent-fg: 255 255 255;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    --surface: 255 255 255;
+    --surface-elevated: 255 255 255;
+    --surface-muted: 244 244 245;
+
+    --danger: 220 38 38;
+    --danger-hover: 185 28 28;
+    --danger-muted: 254 226 226;
+
+    --success: 22 163 74;
+    --success-muted: 220 252 231;
+  }
+
+  .dark {
+    --canvas: 11 11 14;
+    --fg: 250 250 250;
+    --fg-muted: 161 161 170;
+    --fg-subtle: 120 120 128;
+    --border: 48 48 54;
+    --ring: 45 212 191;
+
+    --primary: 45 212 191;
+    --primary-fg: 9 9 11;
+    --primary-hover: 94 234 212;
+    --primary-active: 153 246 228;
+    --primary-muted: 19 78 74;
+
+    --accent: 251 191 36;
+    --accent-fg: 9 9 11;
+
+    --surface: 24 24 27;
+    --surface-elevated: 39 39 42;
+    --surface-muted: 39 39 42;
+
+    --danger: 248 113 113;
+    --danger-hover: 252 165 165;
+    --danger-muted: 69 10 10;
+
+    --success: 74 222 128;
+    --success-muted: 20 83 45;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: rgb(var(--canvas));
+    color: rgb(var(--fg));
+    font-family: theme("fontFamily.sans");
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgb(var(--primary) / 0.2);
+    color: rgb(var(--fg));
+  }
+
+  code {
+    font-family: theme("fontFamily.mono");
+  }
+
+  a {
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--ring));
+    outline-offset: 2px;
+  }
+
+  .landing-hero-mesh {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -30%, rgb(var(--primary) / 0.14), transparent),
+      radial-gradient(ellipse 50% 45% at 100% 0%, rgb(var(--accent) / 0.08), transparent),
+      radial-gradient(ellipse 40% 35% at 0% 80%, rgb(var(--primary) / 0.06), transparent);
+  }
+
+  .dark .landing-hero-mesh {
+    background:
+      radial-gradient(ellipse 80% 55% at 50% -25%, rgb(var(--primary) / 0.12), transparent),
+      radial-gradient(ellipse 45% 40% at 95% 5%, rgb(var(--accent) / 0.07), transparent),
+      radial-gradient(ellipse 35% 30% at 5% 85%, rgb(var(--primary) / 0.08), transparent);
+  }
+
+  .landing-cta {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--surface-muted) / 0.35) 0%,
+      rgb(var(--canvas)) 100%
+    );
+  }
+
+  .dark .landing-cta {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--surface-muted) / 0.25) 0%,
+      rgb(var(--canvas)) 100%
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { cn } from "@/shared/lib/cn";
 
 const categories = [
   { name: "African", path: "/cuisines/African" },
@@ -12,7 +13,7 @@ const categories = [
 export function RecipeCategory() {
   return (
     <div
-      className="divB flex flex-wrap justify-center mx-auto max-w-2xl items-center gap-2"
+      className="flex flex-wrap justify-center gap-2 sm:justify-start"
       role="navigation"
       aria-label="Cuisine categories"
     >
@@ -21,12 +22,13 @@ export function RecipeCategory() {
           to={category.path}
           key={category.path}
           className={({ isActive }) =>
-            [
-              "rounded-tl-full rounded-br-full text-white text-xs text-center px-4 py-2 m-1 transition-colors",
+            cn(
+              "rounded-full border px-3.5 py-1.5 text-xs font-medium transition duration-150 sm:text-sm",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
               isActive
-                ? "bg-green-500 ring-2 ring-green-300"
-                : "bg-gradient-to-r from-green-400 to-blue-500 hover:opacity-90",
-            ].join(" ")
+                ? "border-primary bg-primary-muted text-fg shadow-sm"
+                : "border-border bg-surface-elevated text-fg-muted hover:border-primary/40 hover:bg-surface-muted hover:text-fg"
+            )
           }
         >
           {category.name}

@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import { HashScroll } from "@/app/HashScroll";
 import { NavBar } from "@/layouts/NavBar";
 import { Footer } from "@/layouts/Footer";
 import { ErrorBoundary } from "@/app/ErrorBoundary";
@@ -45,7 +46,8 @@ function PageFallback() {
 export function App() {
   return (
     <ErrorBoundary>
-      <div className="min-h-screen flex flex-col">
+      <HashScroll />
+      <div className="flex min-h-screen flex-col bg-canvas text-fg">
         <NavBar />
         <main className="flex-1">
           <Suspense fallback={<PageFallback />}>

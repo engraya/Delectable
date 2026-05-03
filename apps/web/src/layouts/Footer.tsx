@@ -1,28 +1,51 @@
+import { Link } from "react-router-dom";
 import { RxGithubLogo } from "react-icons/rx";
+import { BRAND } from "@/shared/lib/brand";
 
 const githubRepoUrl = "https://github.com/engraya/delectable-food-webapp";
 
 export function Footer() {
   return (
-    <footer className="rounded-lg mt-10 sticky text-center shadow dark:bg-gray-800 bottom-0 w-full text-white">
-      <div className="w-full mx-auto max-w-screen-xl p-4 md:items-center md:justify-center">
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+    <footer className="mt-auto border-t border-border bg-canvas dark:border-border">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8">
+        <div className="max-w-sm text-center lg:text-left">
+          <p className="font-display text-base font-semibold text-fg">{BRAND.name}</p>
+          <p className="mt-2 text-sm leading-relaxed text-fg-muted">
+            {BRAND.shortTagline} Built for recruiters who scan for product taste—not
+            just tutorials.
+          </p>
+          <p className="mt-4 text-xs text-fg-subtle">
+            © {new Date().getFullYear()} {BRAND.name}. All rights reserved.
+          </p>
+        </div>
+        <div className="flex flex-col items-center gap-6 sm:flex-row sm:flex-wrap sm:justify-center lg:items-end">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+            <Link to="/trending" className="text-fg-muted transition hover:text-fg">
+              Trending
+            </Link>
+            <Link to="/vegetarian" className="text-fg-muted transition hover:text-fg">
+              Vegetarian
+            </Link>
+            <Link to="/cuisines" className="text-fg-muted transition hover:text-fg">
+              Cuisines
+            </Link>
+            <Link
+              to={{ pathname: "/", hash: "ai-features" }}
+              className="text-fg-muted transition hover:text-fg"
+            >
+              AI features
+            </Link>
+          </div>
           <a
             href={githubRepoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline inline-flex"
-            aria-label="GitHub repository"
+            className="inline-flex items-center gap-2 text-sm text-fg-muted transition hover:text-fg"
           >
-            <RxGithubLogo aria-hidden />
+            <RxGithubLogo className="h-4 w-4" aria-hidden />
+            GitHub
           </a>
-        </span>
-        <span className="text-sm text-gray-300 sm:text-center dark:text-gray-400">
-          © {new Date().getFullYear()}{" "}
-          <span className="hover:underline">Delectable™</span>. All Rights
-          Reserved.
-        </span>
-        <br />
+        </div>
       </div>
     </footer>
   );

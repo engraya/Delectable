@@ -1,86 +1,186 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { IoMdCloseCircle } from "react-icons/io";
-import { RxDropdownMenu } from "react-icons/rx";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation, type To } from "react-router-dom";
+import { HiBars3, HiXMark } from "react-icons/hi2";
 import { DarkModeToggle } from "@/layouts/DarkMode/DarkModeToggle";
-import logo from "@/images/food1.png";
+import { BRAND } from "@/shared/lib/brand";
+import { cn } from "@/shared/lib/cn";
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Trending", href: "/trending" },
-  { name: "Vegetarian", href: "/vegetarian" },
-  { name: "Cuisines", href: "/cuisines" },
-] as const;
+type NavItem = {
+  name: string;
+  to: To;
+  end?: boolean;
+  /** When set, active if this hash is present on home */
+  hash?: string;
+  /** Home link not active when deep-linking to an on-page section */
+  isHome?: boolean;
+};
+
+const navigation: NavItem[] = [
+  { name: "Home", to: "/", end: true, isHome: true },
+  { name: "Trending", to: "/trending" },
+  { name: "Vegetarian", to: "/vegetarian" },
+  { name: "Cuisines", to: "/cuisines" },
+  { name: "AI", to: { pathname: "/", hash: "ai-features" }, hash: "ai-features" },
+];
+
+function isNavItemActive(
+  item: NavItem,
+  pathname: string,
+  hash: string,
+  navLinkIsActive: boolean
+) {
+  if (item.hash != null) {
+    return pathname === "/" && hash === `#${item.hash}`;
+  }
+  if (item.isHome) {
+    return navLinkIsActive && hash !== "#ai-features";
+  }
+  return navLinkIsActive;
+}
+
+function navLinkClass(active: boolean, isPending: boolean) {
+  return cn(
+    "relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150",
+    "hover:bg-surface-muted hover:text-fg",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
+    isPending && "opacity-70",
+    active ? "bg-surface-muted text-fg" : "text-fg-muted"
+  );
+}
 
 export function NavBar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname, location.hash]);
 
   return (
-    <header className="sticky top-0 shadow w-full md:w-auto px-5 py-0.5 z-40 flex justify-between md:rounded-lg bg-secondary/20 backdrop-blur-md only-bottom">
-      <div className="container flex sm:flex-row justify-between items-center mx-auto py-2 px-4">
-        <div className="flex items-center text-2xl">
-          <Link to="/" className="flex justify-center items-center">
-            <img src={logo} alt="" width={40} height={40} />
-            <span className="text-xl ml-2 font-bold underline transition-colors hover:text-foreground/80 sm:text-sm">
+    <header className="sticky top-0 z-50 border-b border-border bg-canvas/85 shadow-nav backdrop-blur-md supports-[backdrop-filter]:bg-canvas/75 dark:border-border dark:shadow-nav-dark">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <NavLink
+          to="/"
+          aria-label={`${BRAND.name} home`}
+          className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+        >
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-active font-display text-xs font-bold text-primary-fg shadow-md shadow-primary/25 dark:from-primary dark:to-teal-600 dark:shadow-primary/20">
+            DA
+          </span>
+          <span className="flex flex-col leading-none sm:flex-row sm:items-baseline sm:gap-1.5">
+            <span className="font-display text-lg font-semibold tracking-tight text-fg">
               Delectable
             </span>
-          </Link>
-        </div>
-        <nav
-          className="hidden md:flex items-center justify-center sm:mt-0 space-x-6 middleDiv"
-          aria-label="Main"
-        >
+            <span className="font-display text-lg font-semibold tracking-tight text-primary">
+              AI
+            </span>
+          </span>
+        </NavLink>
+
+        <nav className="hidden items-center gap-0.5 md:flex" aria-label="Main">
           {navigation.map((item) => (
-            <Link
-              to={item.href}
-              key={item.href}
-              className="flex items-center text-xl font-medium dark:border-blue-500 border-emerald-600 hover:border-b-4 hover:border-emerald-600 rounded-b-md transition-colors hover:text-foreground/80 sm:text-sm"
+            <NavLink
+              key={item.name}
+              to={item.to}
+              end={item.end}
+              className={({ isActive, isPending }) =>
+                navLinkClass(
+                  isNavItemActive(item, location.pathname, location.hash, isActive),
+                  isPending
+                )
+              }
             >
               {item.name}
-            </Link>
+            </NavLink>
           ))}
         </nav>
-        <DarkModeToggle />
-        <div className="flex lg:hidden ml-10 relative">
+
+        <div className="flex items-center gap-2">
+          <DarkModeToggle />
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 dark:text-slate-100"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-menu"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface-elevated text-fg shadow-sm transition hover:bg-surface-muted dark:bg-surface-elevated/90 md:hidden"
+            onClick={() => setMobileOpen(true)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
           >
-            <span className="sr-only">Open main menu</span>
-            <RxDropdownMenu className="h-6 w-6" aria-hidden />
+            <span className="sr-only">Open menu</span>
+            <HiBars3 className="h-5 w-5" aria-hidden />
           </button>
-          {mobileMenuOpen ? (
-            <div
-              id="mobile-menu"
-              className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-gray-100 text-gray-800 border-t border-gray-200 rounded-lg shadow-lg z-50"
-            >
-              <div className="p-4">
-                <button
-                  type="button"
-                  className="flex justify-end cursor-pointer w-full bg-transparent border-0 p-0"
-                  onClick={() => setMobileMenuOpen(false)}
-                  aria-label="Close menu"
-                >
-                  <IoMdCloseCircle size="1.5rem" />
-                </button>
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block text-md font-bold leading-6 py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ) : null}
         </div>
       </div>
+
+      {mobileOpen ? (
+        <div className="fixed inset-0 z-50 md:hidden" aria-hidden={false}>
+          <button
+            type="button"
+            className="absolute inset-0 bg-fg/30 backdrop-blur-[2px] dark:bg-black/50"
+            aria-label="Close menu"
+            onClick={() => setMobileOpen(false)}
+          />
+          <div
+            ref={panelRef}
+            id="mobile-nav"
+            className="absolute right-0 top-0 flex h-full w-[min(100%,21rem)] flex-col border-l border-border bg-canvas shadow-2xl dark:shadow-black/40"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Main menu"
+          >
+            <div className="flex items-center justify-between border-b border-border px-4 py-3.5">
+              <span className="text-sm font-semibold text-fg">{BRAND.name}</span>
+              <button
+                type="button"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-fg-muted transition hover:bg-surface-muted hover:text-fg"
+                onClick={() => setMobileOpen(false)}
+              >
+                <span className="sr-only">Close</span>
+                <HiXMark className="h-5 w-5" aria-hidden />
+              </button>
+            </div>
+            <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto p-3" aria-label="Mobile main">
+              {navigation.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.to}
+                  end={item.end}
+                  className={({ isActive, isPending }) =>
+                    cn(
+                      "rounded-xl px-3 py-3 text-base font-medium transition-colors",
+                      navLinkClass(
+                        isNavItemActive(item, location.pathname, location.hash, isActive),
+                        isPending
+                      )
+                    )
+                  }
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.name}
+                </NavLink>
+              ))}
+            </nav>
+            <div className="border-t border-border p-4">
+              <p className="text-2xs leading-relaxed text-fg-subtle">
+                Dark mode is tuned for late-night recipe browsing.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 }
