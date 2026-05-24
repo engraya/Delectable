@@ -5,8 +5,8 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "concurrently -n api,web -c blue,green \"npm run dev -w @delectable/api\" \"npm run dev -w @delectable/web\"",
-    "build": "npm run build -w @delectable/api && npm run build -w @delectable/web",
+    "dev": "node api.js && concurrently -n api,web -c blue,green \"npm run dev -w @delectable/api\" \"npm run dev -w @delectable/web\"",
+    "build": "node api.js && npm run build -w @delectable/api && npm run build -w @delectable/web",
     "test": "npm run test -w @delectable/web",
     "lint": "npm run lint -w @delectable/web && npm run lint -w @delectable/api",
     "typecheck": "npm run typecheck -w @delectable/web && npm run typecheck -w @delectable/api"
